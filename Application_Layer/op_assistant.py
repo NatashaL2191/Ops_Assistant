@@ -1,7 +1,9 @@
+import sqlite3
 class OpAssistant:
-    def __init__(self):
-        
+    def __init__(self, db_path= 'location_data.db'):
+        self.conn = sqlite3.connect(db_path)
         pass
+
     def parse_time_window():
         pass
     def classify_query():

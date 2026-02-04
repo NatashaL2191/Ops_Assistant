@@ -13,7 +13,6 @@ CREATE TABLE entities(
     active BOOLEAN DEFAULT 1
 
 );
-
 CREATE TABLE pings(
     ping_ID INTEGER PRIMARY KEY,
     entity_ID TEXT NOT NULL,
