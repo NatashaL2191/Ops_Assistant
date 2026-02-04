@@ -5,6 +5,7 @@ CREATE TABLE zones(
     zone_type TEXT,
     description TEXT
 );
+
 CREATE TABLE entities(
     entity_ID TEXT PRIMARY KEY,
     entity_name TEXT NOT NULL,
