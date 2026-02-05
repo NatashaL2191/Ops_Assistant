@@ -6,7 +6,7 @@ import random
 from datetime import datetime, timedelta
 import os
 
-# Create database and load schema
+# Database creation
 conn = sqlite3.connect('location_data.db')
 with open('schema.sql', 'r') as f:
     conn.executescript(f.read())
