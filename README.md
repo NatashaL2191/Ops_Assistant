@@ -207,101 +207,10 @@ The generated sample data includes:
 ### Key Components
 
 **`OpsAssistant` class**:
-- `parse_time_window()`: Convert "today", "last 30 minutes" to timestamps
-- `classify_query()`: Determine what the user is asking
-- `generate_sql()`: Build appropriate SQL query
-- `execute_query()`: Run SQL and return results
-- `format_answer()`: Convert SQL results to natural language
-- `process_query()`: Main pipeline orchestrator
+- `parse_time()`: Convert "today", "last 30 minutes" to timestamps
+- `ask()`: Determine what the user is asking
+- `format()`: Convert SQL results to natural language
+- `main()`: Main pipeline orchestrator
 
-## Extending the System
 
-### Adding New Query Types
-
-1. Add classification logic in `classify_query()`
-2. Implement SQL generation in `generate_sql()`
-3. Add formatting logic in `format_answer()`
-
-### Adding New Entities/Zones
-
-Modify `generate_sample_data.py` or insert directly:
-
-```python
-# Add a new zone
-conn.execute("""
-    INSERT INTO zones VALUES 
-    ('Z2-206', 'Server Room', 2, 'technical', 'Data center')
-""")
-
-# Add a new entity
-conn.execute("""
-    INSERT INTO entities VALUES 
-    ('E008', 'Henry Adams', 'person', 'IT', 1)
-""")
-```
-
-### Custom Data Quality Checks
-
-Add new checks in the `data_quality` section of `generate_sql()`:
-
-```python
-elif 'custom_check' in query.lower():
-    sql = """
-    -- Your custom SQL here
-    """
-    return sql
-```
-
-## Troubleshooting
-
-**"Could not connect to database"**:
-- Run `python generate_sample_data.py` first
-- Ensure `location_data.db` exists in the same directory
-
-**"No data found matching your query"**:
-- Check entity/zone names (use "list all zones" or "show all entities")
-- Verify time window (data only covers ~48 hours)
-- Try a broader query
-
-**"I couldn't generate a query for that"**:
-- Include specific entity or zone names
-- Use supported query patterns (see Usage Examples)
-- Type "help" for examples
-
-## API Alternative
-
-To use as a Python API instead of CLI:
-
-```python
-from ops_assistant import OpsAssistant
-
-# Initialize
-assistant = OpsAssistant('location_data.db')
-
-# Process query
-sql, answer = assistant.process_query("Where is Alice?")
-
-print(f"SQL: {sql}")
-print(f"Answer: {answer}")
-
-# Close connection
-assistant.close()
-```
-
-## Testing
-
-Run these test queries after setup:
-
-```bash
-python ops_assistant.py
-```
-
-Then try:
-1. `help` - See all examples
-2. `list all zones` - Verify zones loaded
-3. `show all entities` - Verify entities loaded
-4. `where is alice?` - Test entity location
-5. `check for floor jumps` - Test data quality
-6. `how long did bob spend in engineering today?` - Test dwell time
-7. `who was in the lab yesterday?` - Test zone occupancy
 
